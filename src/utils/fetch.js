@@ -11,7 +11,5 @@ const Service = axios.create({
 
 // request拦截器
 Service.interceptors.request.use(config => {
-  if(store.getters: {
-      
-  })
+  
 })
