@@ -5,7 +5,7 @@ import { getToken } from '@/utils/auth'
 
 // 创建axios实例
 const service = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: process.env.Base_API,
   timeout: 15000
 })
 
@@ -23,8 +23,8 @@ service.interceptors.request.use(config => {
 
 // response拦截器
 service.interceptors.response.use(response => {
-  const res = response.data
-  if (res.code !== 200 && res.code !== 201 && res.code !== 204) {
+  const res = response
+  if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
     Message({
       message: res.data,
       type: 'error',
@@ -44,7 +44,7 @@ service.interceptors.response.use(response => {
     }
     return Promise.reject('error')
   } else {
-    return response.data
+    return response
   }
 },
  error => {

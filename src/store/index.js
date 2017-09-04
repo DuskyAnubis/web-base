@@ -5,7 +5,7 @@ import getters from './getters'
 
 Vue.use(Vuex)
 
-const store = Vuex.Store({
+const store = new Vuex.Store({
   modules: {
     user
   },
