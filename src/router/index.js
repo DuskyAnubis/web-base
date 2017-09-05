@@ -10,8 +10,9 @@ export default new Router({
       redirect: '/login'
     },
     {
-      path: '/hello',
-      component: resolve => require(['../components/Hello.vue'], resolve)
+      path: '/home',
+      component: resolve => require(['../views/home/Home.vue'], resolve),
+      children: []
     },
     {
       path: '/login',

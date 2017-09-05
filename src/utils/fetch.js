@@ -29,8 +29,13 @@ service.interceptors.response.use(response => {
    if (error.response) {
      switch (error.response.status) {
        case 401:
+         Message({
+           showClose: true,
+           message: '身份验证失败，需重新登录!',
+           type: 'warning'
+         })
          store.dispatch('LogOut').then(() => {
-           location.reload()
+           this.$router.replace('/login')
          })
          break
        case 403:
