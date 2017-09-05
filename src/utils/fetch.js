@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -23,38 +23,40 @@ service.interceptors.request.use(config => {
 
 // response拦截器
 service.interceptors.response.use(response => {
-  const res = response
-  if (res.status !== 200 && res.status !== 201 && res.status !== 204) {
-    Message({
-      message: res.data,
-      type: 'error',
-      duration: 5000
-    })
-      // 401身份验证失败，重新登录
-    if (res.code === 401) {
-      MessageBox.confirm('Token认证失败，请重新登录', '确定', {
-        confirmButtonText: '重新登录',
-        cancelButtonText: '取消',
-        type: 'warning'
-      }).then(() => {
-        store.dispatch('').then(() => {
-          location.reload()
-        })
-      })
-    }
-    return Promise.reject('error')
-  } else {
-    return response
-  }
+  return response
 },
  error => {
-   console.log('err' + error)
-   Message({
-     message: error.message,
-     type: 'error',
-     duration: 5000
-   })
-   return Promise.reject(error)
+   if (error.response) {
+     switch (error.response.status) {
+       case 401:
+         store.dispatch('LogOut').then(() => {
+           location.reload()
+         })
+         break
+       case 403:
+         Message({
+           showClose: true,
+           message: '你没有权限访问该资源!',
+           type: 'warning'
+         })
+         break
+       case 400:
+         Message({
+           showClose: true,
+           message: error.response.data.value.error,
+           type: 'error'
+         })
+         break
+       case 404:
+         Message({
+           showClose: true,
+           message: error.response.data.value.error,
+           type: 'error'
+         })
+         break
+     }
+   }
+   return Promise.reject(error.response.data)
  }
 )
 
