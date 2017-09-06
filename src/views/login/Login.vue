@@ -23,8 +23,7 @@ export default {
     return {
       loginForm: {
         userName: '',
-        passWord: '',
-        token: ''
+        passWord: ''
       },
       rules: {
         userName: [
