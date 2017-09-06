@@ -35,7 +35,7 @@ service.interceptors.response.use(response => {
            type: 'warning'
          })
          store.dispatch('LogOut').then(() => {
-           this.$router.replace('/login')
+           window.location.reload()
          })
          break
        case 403:
@@ -59,7 +59,20 @@ service.interceptors.response.use(response => {
            type: 'error'
          })
          break
+       case 500:
+         Message({
+           showClose: true,
+           message: '服务器发生内部错误，请稍后再试',
+           type: 'error'
+         })
+         break
      }
+   } else {
+     Message({
+       showClose: true,
+       message: error.message,
+       type: 'error'
+     })
    }
    return Promise.reject(error.response.data)
  }

@@ -34,7 +34,7 @@ export default {
     handleCommand (command) {
       if (command === 'loginout') {
         this.$store.dispatch('LogOut').then(() => {
-          this.$router.push('/login')
+          location.reload()
         })
       }
     }

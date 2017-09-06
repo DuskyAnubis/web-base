@@ -16,6 +16,10 @@ router.beforeEach((to, from, next) => {
       }
     }
   } else {
-    next('/login')
+    if (to.path === '/login') {
+      next()
+    } else {
+      next('/login')
+    }
   }
 })
