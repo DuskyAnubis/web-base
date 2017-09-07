@@ -9,7 +9,13 @@ router.beforeEach((to, from, next) => {
     } else {
       if (store.getters.name.length === 0) {
         store.dispatch('GetUserInfo').then(res => {
-          next()
+          const params = {
+            roleId: store.getters.roleId,
+            permId: 1
+          }
+          store.dispatch('GetPermissionWithMenu', params).then(() => {
+            next()
+          })
         })
       } else {
         next()

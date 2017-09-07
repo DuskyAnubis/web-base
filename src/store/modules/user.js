@@ -50,7 +50,7 @@ const user = {
     },
 
     // 获得用户信息
-    GetUserInfo ({ commit, state }) {
+    GetUserInfo ({ commit }) {
       return new Promise((resolve, reject) => {
         getUserInfo().then(response => {
           const data = response.data

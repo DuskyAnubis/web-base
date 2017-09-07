@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Message } from 'element-ui'
+import { Message, MessageBox } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -29,13 +29,15 @@ service.interceptors.response.use(response => {
    if (error.response) {
      switch (error.response.status) {
        case 401:
-         Message({
-           showClose: true,
-           message: '身份验证失败，需重新登录!',
-           type: 'warning'
-         })
-         store.dispatch('LogOut').then(() => {
-           window.location.reload()
+         MessageBox({
+           title: '消息',
+           confirmButtonText: '确定',
+           message: '身份验证失败，请重新登录!',
+           type: 'error'
+         }).then(() => {
+           store.dispatch('LogOut').then(() => {
+             window.location.reload()
+           })
          })
          break
        case 403:
